@@ -23,7 +23,7 @@
 
                 <!-- Hearing Schedule -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.HearingSchedule.index') }}" class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">event_note</span>
                         Hearing Schedule
                     </a>
@@ -79,28 +79,27 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Number of Complaints -->
                 <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full">
-                <h2 class="text-lg font-semibold">Number of Complaints Filed <span class="text-gray-500">This Week</span></h2>
-            <div class="flex items-center justify-start mt-10">
-                <span class="text-3xl font-bold">{{ $complaintsThisWeek }}</span> <!-- Use the dynamic variable -->
-                <span class="material-icons text-purple-500">description</span>
-                </div>
-                </div>
+                    <h2 class="text-lg font-semibold">
+                        <a href="{{ route('admin.NumberOfComplaints.index') }}" class="hover:text-purple-600 transition duration-300">
+                            Number of Complaints Filed <span class="text-gray-500">|This Week</span>
+                        </a>
+                    </h2>
 
-
-                <!--
-                <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full">
-                    <h2 class="text-lg font-semibold">Number of Complaints Filed <span class="text-gray-500">This Week</span></h2>
                     <div class="flex items-center justify-start mt-10">
-                        <span class="text-3xl font-bold">5</span>
+                        <span class="text-3xl font-bold">{{ $complaintsThisWeek }}</span> <!-- Use the dynamic variable -->
                         <span class="material-icons text-purple-500">description</span>
                     </div>
                 </div>
 
-            -->
 
-                <!-- Number of Settled Complaints -->
-                <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full">
-                    <h2 class="text-lg font-semibold">Number of Settled Complaints <span class="text-gray-500">This Week</span></h2>
+
+
+
+                  <!-- Number of Settled Complaints -->
+                  <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full">
+                    <a href="{{ route('admin.SettledComplaints.index') }}" class="hover:text-purple-600 transition duration-300">
+                    <h2 class="text-lg font-semibold">Number of Settles Complaints <span class="text-gray-500"> |This Week</span></h2>
+                    </a>
                     <div class="flex items-center justify-start mt-10">
                         <span class="text-3xl font-bold">{{ $pendingComplaintsThisWeek2 }}</span>
                         <span class="material-icons text-green-500">check_circle</span>
@@ -108,25 +107,21 @@
                 </div>
 
 
+                    <!-- Number of Pending Complaints -->
                     <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full h-36">
-                 <h2 class="text-lg font-semibold">Number of Pending Complaints <span class="text-gray-500">This Week</span></h2>
-                    <div class="flex items-center justify-start mt-2">
+                        <a href="{{ route('admin.NumberOfPendingComplaints.index') }}" class="hover:text-purple-600 transition duration-300">
+                        <h2 class="text-lg font-semibold">Number of Pending Complaints <span class="text-gray-500">|This Week</span></h2>
+                        </a>
+                        <div class="flex items-center justify-start mt-2">
                         <span class="text-3xl font-bold mr-2">{{ $pendingComplaintsThisWeek }}</span> <!-- Display dynamic count -->
                     <span class="material-icons text-red-500">close</span> <!-- X icon beside the number -->
                         </div>
                 </div>
 
 
-                <!-- Number of Pending Complaints 
-                <div class="bg-white p-4 shadow-md rounded-lg border border-purple-500 w-full h-36">
-                    <h2 class="text-lg font-semibold">Number of Pending Complaints <span class="text-gray-500">This Week</span></h2>
-                    <div class="flex items-center justify-start mt-2">
-                        <span class="text-3xl font-bold mr-2">2</span> <!-- Added margin to the right for spacing -->
-                        <span class="material-icons text-red-500">close</span> <!-- X icon beside the number -->
-                    </div>
-                </div>
+              
 
-            -->
+           
             </div>
         </div>
 
@@ -142,6 +137,7 @@
                         <tr class="bg-gray-200">
                             <th class="border px-4 py-2">Complaint ID</th>
                             <th class="border px-4 py-2">Description</th>
+                            <th class="border px-4 py-2">Files</th>
                             <th class="border px-4 py-2">Status</th>
                         </tr>
                     </thead>
@@ -150,7 +146,14 @@
                 <tr>
                     <td class="border px-4 py-2">{{ $complaint->id }}</td>
                     <td class="border px-4 py-2">{{ $complaint->complaint }}</td>
-                    <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td> <!-- Capitalize the first letter of the status -->
+                    <td class="border px-4 py-2">
+                        <!-- Sample Video -->
+                        <video class="w-48 h-32 rounded-lg" controls>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </td>
+                    <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td><!-- Capitalize the first letter of the status -->
                 </tr>
                 @endforeach
                 <!-- If there are no complaints -->

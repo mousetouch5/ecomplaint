@@ -19,6 +19,14 @@
                     </a>
                 </li>
 
+                 <!-- Choose Hearing Schedule (with modal trigger) -->
+                <li class="mb-4 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
+                    <a href="javascript:void(0)" class="flex items-center p-4 hover:bg-purple-100" onclick="openScheduleModal()">
+                        <span class="material-icons mr-2">schedule</span>
+                        Choose Hearing Schedule
+                    </a>
+                </li>
+
                 <!-- Other Sidebar Links Here... -->
                 
                 <!-- Logout -->
@@ -30,6 +38,40 @@
                 </li>
             </ul>
         </div>
+
+
+            
+                        <!-- Modal for Hearing Schedule -->
+
+        <div id="scheduleModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <h2 class="text-xl font-semibold mb-4">Choose Hearing Schedule</h2>
+                    
+            <!-- Schedule Form -->
+            <form action="">
+                <label class="block mb-2">Select Available Date:</label>
+                <input type="date" class="border border-gray-300 rounded-lg p-2 w-full mb-4">
+
+                <label class="block mb-2">Select Available Time:</label>
+                <input type="time" class="border border-gray-300 rounded-lg p-2 w-full mb-4">
+
+                <!-- Submit Button -->
+                <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded-lg w-full hover:bg-purple-700">
+                    Confirm Schedule
+                </button>
+            </form>
+
+            <!-- Close Modal Button -->
+            <button onclick="closeScheduleModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+                <i class="material-icons">close</i>
+            </button>
+                </div>
+            </div>
+        </div>
+        <!-- End Hearing Modal -->
+
+
 
         <!-- Complaint Info Modal -->
         <div class="modal" id="complaint-modal">
@@ -173,5 +215,17 @@
                 });
             }
         </script>
+
+
+            <!-- JavaScript to Handle Modal -->
+            <script>
+                function openScheduleModal() {
+                    document.getElementById('scheduleModal').classList.remove('hidden');
+                }
+
+                function closeScheduleModal() {
+                    document.getElementById('scheduleModal').classList.add('hidden');
+                }
+            </script>
     </div>
 </x-app-layout>

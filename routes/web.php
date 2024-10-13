@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\NumberOfComplaintsController;
+use App\Http\Controllers\SettledComplaintsController;
+use App\Http\Controllers\NumberOfPendingComplaintController;
+use App\Http\Controllers\HearingScheduleController;
 
 
 
@@ -29,6 +33,13 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-
-
+Route::get('/number-of-complaints', [NumberOfComplaintsController::class, 'index'])->name('admin.NumberOfComplaints.index');
+Route::get('/SettledComplaints', [SettledComplaintsController::class, 'index'])->name('admin.SettledComplaints.index');
+Route::get('/NumberOfPendingComplaints', [NumberOfPendingComplaintController::class, 'index'])->name('admin.NumberOfPendingComplaints.index');
+Route::get('/HearingSchedule', [HearingScheduleController::class, 'index'])->name('admin.HearingSchedule.index');
+Route::get('/adminDashboard', [AdminDashboardController::class, 'index'])->name('admin.adminDashboard.index');
+Route::resource('admin/NumberOfComplaints', NumberOfComplaintsController::class);
+Route::resource('admin/SettledComplaints', SettledComplaintsController::class);
 Route::resource('admin/adminDashboard', AdminDashboardController::class);
+Route::resource('admin/NumberOfPendingComplaints',NumberOfPendingComplaintController::class);
+Route::resource('admin/HearingSchedule', HearingScheduleController::class);

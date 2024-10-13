@@ -13,13 +13,8 @@
                 </div>
                  <!-- E-Complaints Text -->
                  <div class="ms-2 text-3xl font-semibold text-purple-700">E-Complaints</div>
-                 <!-- Search Box -->
-                 <div class="relative ml-5">
-                     <input type="text" placeholder="Search..." class="w-64 border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring focus:ring-purple-500 focus:border-purple-500" />
-                     <button class="absolute right-0 top-0 mt-2 mr-3">
-                         <span class="material-icons">search</span> <!-- Optional: Search icon -->
-                     </button>
-            </div> </div>
+               
+        </div>
 
               <div class="flex items-center">
                 <!-- Notification Bell -->
