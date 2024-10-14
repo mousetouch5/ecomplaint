@@ -148,30 +148,28 @@
     <td class="border px-4 py-2">{{ $complaint->complaint }}</td>
     <td class="border px-4 py-2">
         @php
-            $filePaths = json_decode($complaint->uploaded_file); // Decode the JSON string
+            $uploadedFiles = json_decode($complaint->uploaded_file); // Decode the JSON to an array
         @endphp
-        @if($filePaths) <!-- Check if there are any uploaded files -->
-            @foreach($filePaths as $filePath) <!-- Loop through each uploaded file -->
-                @if(str_contains($filePath, '.mp4')) <!-- Check if the file is a video -->
-                    <video class="w-48 h-32 rounded-lg mb-2" controls>
-                        <source src="{{ asset('storage/' . $filePath) }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                @elseif(in_array(pathinfo($filePath, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) <!-- Check if the file is an image -->
-                    <img src="{{ asset('storage/' . $filePath) }}" class="w-48 h-32 rounded-lg mb-2" alt="Uploaded Image">
-                @endif
-            @endforeach
-        @else
-            <p>No files uploaded</p> <!-- Message if no files are uploaded -->
-        @endif
+
+        @foreach($uploadedFiles as $file)
+            @if(str_contains($file, '.mp4'))
+                <!-- Video -->
+                <video class="w-48 h-32 rounded-lg" controls>
+                    <source src="{{ asset($file) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            @else
+                <!-- Image -->
+                <img src="{{ asset($file) }}" class="w-48 h-32 rounded-lg" alt="Uploaded image">
+            @endif
+        @endforeach
     </td>
     <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td><!-- Capitalize the first letter of the status -->
 </tr>
 @endforeach
-<!-- If there are no complaints -->
 @if($complaints->isEmpty())
 <tr>
-    <td colspan="4" class="border px-4 py-2 text-center">No complaints found</td>
+    <td colspan="3" class="border px-4 py-2 text-center">No complaints found</td>
 </tr>
 @endif
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Complaint; 
+use App\Models\Complaint;
 
 class ComplaintController extends Controller
 {
@@ -31,9 +31,9 @@ class ComplaintController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 if ($file->isValid()) {
-                    // Store the file and get the path
-                    $filePath = $file->store('photosandvideos', 'public'); // Store in 'photosandvideos' folder
-                    $filePaths[] = $filePath; // Add the path to the array
+                    // Store the file in the uploads folder
+                    $filePath = $file->move(public_path('uploads/photosandvideos'), $file->getClientOriginalName()); // Store in 'uploads/photosandvideos' folder
+                    $filePaths[] = 'uploads/photosandvideos/' . $file->getClientOriginalName(); // Add the path to the array
                     \Log::info('Uploaded file path: ' . $filePath); // Log the uploaded file path
                 } else {
                     \Log::error('Invalid file: ' . $file->getClientOriginalName());
