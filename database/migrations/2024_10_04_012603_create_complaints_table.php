@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('sex', ['Male', 'Female']);
             $table->enum('civil_status', ['Single', 'Married', 'Divorced', 'Widowed']);
             $table->text('complaint');
-            $table->json('uploaded_files')->nullable(); // For file uploads
+            $table->text('uploaded_file')->nullable(); // This should match the model's fillable array
             $table->enum('status', ['fixed', 'not_fixed'])->default('not_fixed'); // Add this line
         });
     }

@@ -140,28 +140,47 @@
                             <th class="border px-4 py-2">Files</th>
                             <th class="border px-4 py-2">Status</th>
                         </tr>
-                    </thead>
+</thead>
 
-                 @foreach($complaints as $complaint) <!-- Loop through complaints -->
-                <tr>
-                    <td class="border px-4 py-2">{{ $complaint->id }}</td>
-                    <td class="border px-4 py-2">{{ $complaint->complaint }}</td>
-                    <td class="border px-4 py-2">
-                        <!-- Sample Video -->
-                        <video class="w-48 h-32 rounded-lg" controls>
-                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </td>
-                    <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td><!-- Capitalize the first letter of the status -->
-                </tr>
-                @endforeach
-                <!-- If there are no complaints -->
-                @if($complaints->isEmpty())
-                <tr>
-                    <td colspan="3" class="border px-4 py-2 text-center">No complaints found</td>
-                </tr>
+@foreach($complaints as $complaint) <!-- Loop through complaints -->
+<tr>
+    <td class="border px-4 py-2">{{ $complaint->id }}</td>
+    <td class="border px-4 py-2">{{ $complaint->complaint }}</td>
+    <td class="border px-4 py-2">
+        @php
+            $filePaths = json_decode($complaint->uploaded_file); // Decode the JSON string
+        @endphp
+        @if($filePaths) <!-- Check if there are any uploaded files -->
+            @foreach($filePaths as $filePath) <!-- Loop through each uploaded file -->
+                @if(str_contains($filePath, '.mp4')) <!-- Check if the file is a video -->
+                    <video class="w-48 h-32 rounded-lg mb-2" controls>
+                        <source src="{{ asset('storage/' . $filePath) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @elseif(in_array(pathinfo($filePath, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) <!-- Check if the file is an image -->
+                    <img src="{{ asset('storage/' . $filePath) }}" class="w-48 h-32 rounded-lg mb-2" alt="Uploaded Image">
                 @endif
+            @endforeach
+        @else
+            <p>No files uploaded</p> <!-- Message if no files are uploaded -->
+        @endif
+    </td>
+    <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td><!-- Capitalize the first letter of the status -->
+</tr>
+@endforeach
+<!-- If there are no complaints -->
+@if($complaints->isEmpty())
+<tr>
+    <td colspan="4" class="border px-4 py-2 text-center">No complaints found</td>
+</tr>
+@endif
+
+
+
+
+
+
+
 
 
 

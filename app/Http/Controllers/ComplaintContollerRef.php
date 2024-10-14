@@ -22,25 +22,16 @@ class ComplaintController extends Controller
             'sex' => 'required|in:Male,Female',
             'civil_status' => 'required|in:Single,Married,Divorced,Widowed',
             'complaint' => 'required|string',
-            'files.*' => 'file|mimes:jpg,jpeg,png,gif,mp4,mp3|max:2048', // Validate files
+            'files.*' => 'nullable|file|max:10240', // Max 10MB per file
         ]);
 
         // Handle file uploads
-        $filePaths = []; // Array to store file paths
-
+        $files = [];
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                if ($file->isValid()) {
-                    // Store the file and get the path
-                    $filePath = $file->store('photosandvideos', 'public'); // Store in 'photosandvideos' folder
-                    $filePaths[] = $filePath; // Add the path to the array
-                    \Log::info('Uploaded file path: ' . $filePath); // Log the uploaded file path
-                } else {
-                    \Log::error('Invalid file: ' . $file->getClientOriginalName());
-                }
+                $path = $file->store('complaints', 'public');
+                $files[] = $path;
             }
-        } else {
-            \Log::warning('No files were uploaded');
         }
 
         try {
@@ -54,7 +45,7 @@ class ComplaintController extends Controller
                 'sex' => $request->sex,
                 'civil_status' => $request->civil_status,
                 'complaint' => $request->complaint,
-                'uploaded_file' => json_encode($filePaths), // Store file paths as JSON
+                'uploaded_files' => json_encode($files),
                 'status' => 'not_fixed', // Default status
             ]);
             
