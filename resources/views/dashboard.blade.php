@@ -19,8 +19,8 @@
                     </a>
                 </li>
 
-                 <!-- Choose Hearing Schedule (with modal trigger) -->
-                <li class="mb-4 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
+                  <!-- Choose Hearing Schedule (with modal trigger) -->
+                  <li class="mb-4 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
                     <a href="javascript:void(0)" class="flex items-center p-4 hover:bg-purple-100" onclick="openScheduleModal()">
                         <span class="material-icons mr-2">schedule</span>
                         Choose Hearing Schedule
@@ -40,8 +40,23 @@
         </div>
 
 
-            
-                        <!-- Modal for Hearing Schedule -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <!-- Modal for Hearing Schedule -->
 
         <div id="scheduleModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
             <div class="flex items-center justify-center min-h-screen">
@@ -176,7 +191,7 @@
                 document.getElementById('detail_civil_status').value = form.civil_status.value;
 
                 document.getElementById('complaint-modal').classList.remove('modal-open');
-                document.getElementById('complaint-detail-modal').style.display = 'block';
+                document.getElementById('complaint-detail-modal').style.display = 'flex';
             }
 
             function closeComplaintDetailModal() {
@@ -214,18 +229,32 @@
                     console.error('Error:', error);
                 });
             }
-        </script>
+                            </script>
+                            <!-- JavaScript to Handle Modal -->
+                            <script>
+                                function openScheduleModal() {
+                                    document.getElementById('scheduleModal').classList.remove('hidden');
+                                }
 
-
-            <!-- JavaScript to Handle Modal -->
-            <script>
-                function openScheduleModal() {
-                    document.getElementById('scheduleModal').classList.remove('hidden');
-                }
-
-                function closeScheduleModal() {
-                    document.getElementById('scheduleModal').classList.add('hidden');
-                }
-            </script>
+                                function closeScheduleModal() {
+                                    document.getElementById('scheduleModal').classList.add('hidden');
+                                }
+                            </script>
     </div>
+    <style>
+                    
+        #complaint-detail-modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Background dimming */
+    z-index: 50;
+}
+
+</style>
 </x-app-layout>
