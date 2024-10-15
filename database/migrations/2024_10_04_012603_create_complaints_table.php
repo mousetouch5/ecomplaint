@@ -23,7 +23,8 @@ return new class extends Migration
             $table->enum('civil_status', ['Single', 'Married', 'Divorced', 'Widowed']);
             $table->text('complaint');
             $table->text('uploaded_file')->nullable(); // This should match the model's fillable array
-            $table->enum('status', ['fixed', 'not_fixed'])->default('not_fixed'); // Add this line
+            $table->enum('status', ['fixed', 'not_fixed'])->default('not_fixed'); // Status of the complaint
+            $table->timestamp('settled_at')->nullable(); // New column for the settled date
         });
     }
 

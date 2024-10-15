@@ -106,6 +106,9 @@
                     var complaintList = '';
                     if (response.length > 0) {
                         response.forEach(function (complaint) {
+                            // Format the created_at timestamp
+                            var formattedDate = formatDateTime(complaint.created_at);
+
                             complaintList += `
                                 <div role="alert" class="alert flex items-center p-4 border border-gray-300 bg-white rounded-md shadow-md mb-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0 mr-2">
@@ -115,7 +118,7 @@
                                         <div class="">
                                             <h1 class="mt-2 text-lg font-bold text-purple-700">Complaint File</h1>
                                         </div>
-                                        <h1 class="text-violet-700">${complaint.complaint || 'No Description'} (${complaint.created_at})</h1>
+                                        <h1 class="text-violet-700">${complaint.complaint || 'No Description'} (${formattedDate})</h1>
                                     </div>
                                 </div>`;
                         });
@@ -130,8 +133,15 @@
                 }
             });
         });
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            const options = { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+            return date.toLocaleString('en-US', options);
+        }
     });
 </script>
+
 
 
 

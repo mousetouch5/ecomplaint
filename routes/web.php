@@ -8,9 +8,10 @@ use App\Http\Controllers\NumberOfComplaintsController;
 use App\Http\Controllers\SettledComplaintsController;
 use App\Http\Controllers\NumberOfPendingComplaintController;
 use App\Http\Controllers\HearingScheduleController;
+use App\Http\Controllers\AdminRegistrationController;
 
-
-
+Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
+Route::post('admin/register', [AdminRegistrationController::class, 'store']);
 
 Route::middleware(['web'])->group(function () {
     Route::post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
