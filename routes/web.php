@@ -11,6 +11,7 @@ use App\Http\Controllers\HearingScheduleController;
 
 
 
+
 Route::middleware(['web'])->group(function () {
     Route::post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
 });
@@ -43,3 +44,7 @@ Route::resource('admin/SettledComplaints', SettledComplaintsController::class);
 Route::resource('admin/adminDashboard', AdminDashboardController::class);
 Route::resource('admin/NumberOfPendingComplaints',NumberOfPendingComplaintController::class);
 Route::resource('admin/HearingSchedule', HearingScheduleController::class);
+
+
+
+Route::post('/fetch-complaints', [NumberOfComplaintsController::class, 'fetchComplaints'])->name('fetch.complaints');

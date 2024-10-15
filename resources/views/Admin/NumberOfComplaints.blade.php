@@ -71,31 +71,103 @@
             </ul>
         </div>
 
+<div class="flex-grow p-4">
+    <!-- Title for Number of Complaints Filed -->
+    <h2 class="text-xl font-semibold mb-4 text-purple-700">Number of Complaints Filed</h2>
+
+    <!-- Button Group for Filtering -->
+    <div class="mb-4">
+        <button id="todayBtn" class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2" data-period="today">Today</button>
+        <button id="weekBtn" class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2" data-period="week">This Week</button>
+        <button id="monthBtn" class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white" data-period="month">This Month</button>
+    </div>
+
+    <!-- Container for Complaints -->
+    <div id="complaintList" class="mb-4">
+        <h1 class="text-violet-700">Select a period to see complaints.</h1> <!-- Default text -->
+    </div>
+</div>
+
+<!-- JavaScript for handling button clicks -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('button').on('click', function () {
+            var period = $(this).data('period');
+
+            $.ajax({
+                url: '{{ route("fetch.complaints") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    period: period
+                },
+                success: function (response) {
+                    var complaintList = '';
+                    if (response.length > 0) {
+                        response.forEach(function (complaint) {
+                            complaintList += `
+                                <div role="alert" class="alert flex items-center p-4 border border-gray-300 bg-white rounded-md shadow-md mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div class="">
+                                        <div class="">
+                                            <h1 class="mt-2 text-lg font-bold text-purple-700">Complaint File</h1>
+                                        </div>
+                                        <h1 class="text-violet-700">${complaint.complaint || 'No Description'} (${complaint.created_at})</h1>
+                                    </div>
+                                </div>`;
+                        });
+                    } else {
+                        complaintList = '<h1 class="text-violet-700">No complaints found for this period.</h1>';
+                    }
+
+                    $('#complaintList').html(complaintList);
+                },
+                error: function () {
+                    $('#complaintList').html('<h1 class="text-violet-700">Error fetching complaints.</h1>');
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+<!--
         <div class="flex-grow p-4">
-            <!-- Title for Number of Complaints Filed -->
-            <h2 class="text-xl font-semibold mb-4 text-purple-700">Number of Complaints Filed</h2> <!-- Changed color to purple -->
+            
+            <h2 class="text-xl font-semibold mb-4 text-purple-700">Number of Complaints Filed</h2> 
         
-            <!-- Button Group for Filtering -->
+        
             <div class="mb-4">
-                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2">Today</button> <!-- Button color changed -->
-                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2">This Week</button> <!-- Button color changed -->
-                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white">This Month</button> <!-- Button color changed -->
+                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2">Today</button> 
+                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white mr-2">This Week</button>
+                <button class="btn btn-primary bg-purple-700 hover:bg-purple-800 text-white">This Month</button> 
             </div>
         
-            <!-- Alert for Complaint Files -->
+         
             <div role="alert" class="alert flex items-center p-4 border border-gray-300 bg-white rounded-md shadow-md mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info h-6 w-6 shrink-0 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div class="">
                     <div class="">
-                        <h1 class="mt-2 text-lg font-bold text-purple-700">Complaint File</h1> <!-- Changed color to purple -->
+                        <h1 class="mt-2 text-lg font-bold text-purple-700">Complaint File</h1>
                     </div>
                     <h1 class="text-violet-700">Noisy Complaint</h1>
                 </div>
             </div>
         </div>
         
+-->
         
         
            

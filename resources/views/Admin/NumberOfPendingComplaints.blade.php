@@ -84,30 +84,24 @@
                             <th class="py-3 px-4 text-left border-b">Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Complaint_004</td>
-                            <td class="py-2 px-4 border-b">User4</td>
-                            <td class="py-2 px-4 border-b">2024-09-30</td>
-                            <td class="py-2 px-4 border-b text-yellow-600">Pending</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Complaint_005</td>
-                            <td class="py-2 px-4 border-b">User5</td>
-                            <td class="py-2 px-4 border-b">2024-10-01</td>
-                            <td class="py-2 px-4 border-b text-yellow-600">Pending</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b">Complaint_006</td>
-                            <td class="py-2 px-4 border-b">User6</td>
-                            <td class="py-2 px-4 border-b">2024-10-02</td>
-                            <td class="py-2 px-4 border-b text-yellow-600">Pending</td>
-                        </tr>
-                        <!-- More rows can be added here -->
+                            <tbody>
+                         @forelse($pendingComplaints as $complaint)
+                             <tr>
+                            <td class="py-2 px-4 border-b">{{ $complaint->id }}</td>
+                            <td class="py-2 px-4 border-b">{{ $complaint->first_name }}</td>
+                            <td class="py-2 px-4 border-b">{{ $complaint->created_at }}</td>
+                            <td class="py-2 px-4 border-b text-yellow-600">{{ $complaint->status }}</td>
+                            </tr>
+                          @empty
                         <tr>
                             <td colspan="4" class="py-2 px-4 text-center border-b">No more pending complaints.</td>
                         </tr>
-                    </tbody>
+                    @endforelse
+</tbody>
+
+
+
+
                 </table>
             </div>
         </div>
