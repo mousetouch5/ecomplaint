@@ -10,10 +10,13 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        // Logic to list schedules
-        $schedules = Schedule::where('user_id', Auth::id())->get();
-        return view('dashboard', compact('schedules'));
-     
+        // Fetch all schedules for availability checking
+        $schedules = Schedule::all();
+
+        // Fetch the schedules booked by the logged-in user
+        $userSchedules = Schedule::where('user_id', Auth::id())->get();
+
+        return view('dashboard', compact('schedules', 'userSchedules'));
     }
 
     public function store(Request $request)
@@ -23,6 +26,15 @@ class ScheduleController extends Controller
             'date' => 'required|date',
             'time' => 'required',
         ]);
+
+        // Check if the schedule is already taken
+        $existingSchedule = Schedule::where('date', $request->date)
+            ->where('time', $request->time)
+            ->first();
+
+        if ($existingSchedule) {
+            return redirect()->back()->with('error', 'This schedule is already taken. Please choose another time.');
+        }
 
         // Create the schedule and associate it with the logged-in user
         Schedule::create([

@@ -128,8 +128,8 @@
         <!-- DaisyUI Modal Structure -->
 
         
-        <input type="checkbox" id="complaintsModal" class="modal-toggle" />
-        <label for="complaintsModal" class="modal cursor-pointer">
+                  <input type="checkbox" id="complaintsModal" class="modal-toggle" />
+                        <label for="complaintsModal" class="modal cursor-pointer">
             <label class="modal-box relative" for="">
                 <h2 class="text-xl font-bold mb-4">Complaints Overview</h2>
                 <table class="min-w-full bg-white border border-gray-300">

@@ -56,27 +56,32 @@
 
 
 
-<!-- Modal for Hearing Schedule -->
-<div id="scheduleModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
+<!-- Modal for Hearing Schedule --><div id="scheduleModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-xl font-semibold mb-4">Choose Hearing Schedule</h2>
 
-                @if($schedules->isNotEmpty())
-        <div class="mb-4 p-2 bg-blue-100 rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Already Scheduled:</h3>
-            <ul>
-                @foreach($schedules as $schedule)
-                        <li>Date: {{ $schedule->date }} | Time: {{ $schedule->time }}</li>
-                @endforeach
-                </ul>
+            @if($userSchedules->isNotEmpty())
+                <div class="mb-4 p-2 bg-blue-100 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">Already Scheduled:</h3>
+                    <ul>
+                        @foreach($userSchedules as $userSchedule)
+                            <li>
+                                Date: {{ \Carbon\Carbon::parse($userSchedule->date)->format('F j, Y') }} | 
+                                Time: {{ \Carbon\Carbon::parse($userSchedule->time)->format('h:i A') }}
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                @endif
-
+            @else
+                <div class="mb-4 p-2 bg-gray-100 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">You have no scheduled appointments.</h3>
+                </div>
+            @endif
 
             <!-- Schedule Form -->
             <form action="{{ route('schedules.store') }}" method="POST">
-                @csrf <!-- Laravel CSRF token for security -->
+                @csrf
                 <label class="block mb-2">Select Available Date:</label>
                 <input type="date" name="date" class="border border-gray-300 rounded-lg p-2 w-full mb-4" required>
 
@@ -106,6 +111,12 @@
     </div>
 @endif
 
+@if(session('error'))
+    <div class="fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+        <strong>Error:</strong> {{ session('error') }}
+        <button onclick="this.parentElement.remove()" class="text-xl ml-4">&times;</button>
+    </div>
+@endif
 
 
 

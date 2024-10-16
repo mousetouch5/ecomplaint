@@ -10,8 +10,15 @@ class DashboardController extends Controller
 {
  
     public function index() {
-    $schedules = Schedule::where('user_id', Auth::id())->get();
-    return view('dashboard', compact('schedules'));
+        $schedules = Schedule::all();
+
+        // Fetch the schedules booked by the logged-in user
+        $userSchedules = Schedule::where('user_id', Auth::id())->get();
+
+        return view('dashboard', compact('schedules', 'userSchedules'));
+
+
+    
 }
  
     //
