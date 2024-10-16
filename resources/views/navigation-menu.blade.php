@@ -3,7 +3,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center"> <!-- Added items-center for vertical alignment -->
+        <div class="flex justify-between h-16 items-center"> 
             <div class="flex items-center">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
@@ -11,18 +11,45 @@
                         <x-authentication-card-logo class="block h-6 w-auto" />
                     </a>
                 </div>
-                 <!-- E-Complaints Text -->
-                 <div class="ms-2 text-3xl font-semibold text-purple-700">E-Complaints</div>
-               
-        </div>
 
-              <div class="flex items-center">
+                <!-- E-Complaints Text -->
+                <div class="ms-2 text-3xl font-semibold text-purple-700">E-Complaints</div>
+            </div>
+
+            <!-- Right side (Notification Bell and Settings) -->
+            <div class="flex items-center ms-auto">
                 <!-- Notification Bell -->
-                <button class="relative ml-15">
-                    <span class="material-icons">notifications</span> <!-- Notification icon -->
-                    <!-- Optional: Badge for unread notifications -->
-                    <span class="absolute top-0 right-0 inline-flex items-center justify-center w-3 h-3 bg-blue-500 text-white text-xs font-bold rounded-full">1</span>
-                </button>
+                <div class="relative">
+                    <button class="relative" id="notification-button" onclick="toggleNotificationDropdown()">
+                        <span class="material-icons">notifications</span>
+                        <!-- Badge for unread notifications -->
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center w-3 h-3 bg-blue-500 text-white text-xs font-bold rounded-full">1</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg">
+                        <div class="p-4">
+                            <h3 class="text-gray-700 font-semibold text-sm mb-2">Notifications</h3>
+
+                            <!-- Example Notification -->
+                            <div class="border-b border-gray-300 py-2">
+                                <p class="text-sm text-gray-600">You have a new message</p>
+                                <span class="text-xs text-gray-500">2 mins ago</span>
+                            </div>
+
+                            <!-- Example Notification -->
+                            <div class="border-b border-gray-300 py-2">
+                                <p class="text-sm text-gray-600">Reminder: Meeting at 3 PM</p>
+                                <span class="text-xs text-gray-500">10 mins ago</span>
+                            </div>
+
+                            <!-- See all notifications -->
+                            <div class="text-center mt-2">
+                                <a href="#" class="text-blue-500 hover:underline text-sm">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>      
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Teams Dropdown -->
@@ -223,3 +250,25 @@
         </div>
     </div>
 </nav>
+
+
+<!-- JavaScript for Toggling the Dropdown -->
+<script>
+    function toggleNotificationDropdown() {
+        const dropdown = document.getElementById('notification-dropdown');
+        if (dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden');
+        } else {
+            dropdown.classList.add('hidden');
+        }
+    }
+
+    // Optional: Close the dropdown when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const notificationButton = document.getElementById('notification-button');
+        const dropdown = document.getElementById('notification-dropdown');
+        if (!notificationButton.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+</script>

@@ -27,6 +27,22 @@
                     </a>
                 </li>
 
+                 <!-- Profile -->
+                 <li class="mb-4 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
+                    <a href="{{ route('profile.show') }}" class="flex items-center p-4 hover:bg-purple-100">
+                        <span class="material-icons mr-2">person</span>
+                        Profile
+                    </a>
+                </li>
+
+              <!-- Trigger the Feedback Form Modal in Sidebar -->
+            <li class="mb-4 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
+                <label for="feedbackModal" class="flex items-center p-4 hover:bg-purple-100 cursor-pointer">
+                    <span class="material-icons mr-2">feedback</span>
+                    Feedback Form
+                </label>
+            </li>
+
                 <!-- Other Sidebar Links Here... -->
                 
                 <!-- Logout -->
@@ -39,7 +55,40 @@
             </ul>
         </div>
 
+                <!-- The checkbox to control the modal visibility -->
+                <input type="checkbox" id="feedbackModal" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box">
+                        <h2 class="text-xl font-semibold mb-4">Submit Feedback</h2>
+                        <form>
+                            <!-- Name Input -->
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700">Name</label>
+                                <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500" required>
+                            </div>
 
+                            <!-- Email Input -->
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700">Email</label>
+                                <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500" required>
+                            </div>
+
+                            <!-- Complaint Input -->
+                            <div class="mb-4">
+                                <label for="complaint" class="block text-gray-700">Your Complaint</label>
+                                <textarea name="complaint" id="complaint" rows="4" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500" required></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-right">
+                                <label for="feedbackModal" class="btn bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</label>
+                                <button type="submit" class="btn bg-purple-600 text-white px-4 py-2 rounded">Submit</button>
+                            </div>
+                        </form>
+                                </div>
+                </div>
+
+                <!--- end feedback modal boss -->
 
 
 
@@ -105,14 +154,14 @@
 
 <!-- Success Notification -->
 @if(session('success'))
-    <div class="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+    <div class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
         {{ session('success') }}
         <button onclick="this.parentElement.remove()" class="text-xl ml-4">&times;</button>
     </div>
 @endif
 
 @if(session('error'))
-    <div class="fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+    <div class="fixed top-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg">
         <strong>Error:</strong> {{ session('error') }}
         <button onclick="this.parentElement.remove()" class="text-xl ml-4">&times;</button>
     </div>
@@ -178,7 +227,7 @@
                         </select>
                     </div>
                     <div class="modal-action flex flex-col space-y-2">
-                        <button type="submit" class="btn btn-purple-700 text-white bg-purple-700 hover:bg-purple-800 w-full">Next</button>
+                        <button type="submit" class="btn btn-purple-700 text-white bg-purple-700 hover:bg-purple-800 w-full ml-2">Next</button>
                         <a href="javascript:void(0)" class="btn btn-outline border-purple-700 text-purple-700 hover:bg-purple-100 w-full" onclick="closeComplaintModal()">Close</a>
                     </div>
                 </form>
@@ -280,6 +329,21 @@
 
                                 function closeScheduleModal() {
                                     document.getElementById('scheduleModal').classList.add('hidden');
+                                }
+                            </script>
+                            
+                              <script>
+                                function openFeedbackFormModal() {
+                                    document.getElementById('feedbackFormModal').classList.remove('hidden');
+                                }
+
+                                function closeFeedbackFormModal() {
+                                    document.getElementById('feedbackFormModal').classList.add('hidden');
+                                }
+
+                                function submitFeedback() {
+                                    alert("Feedback submitted successfully! ");
+                                    closeFeedbackFormModal();
                                 }
                             </script>
     </div>

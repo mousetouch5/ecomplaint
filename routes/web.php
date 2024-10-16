@@ -11,6 +11,8 @@ use App\Http\Controllers\HearingScheduleController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\UserFeedBackController;
 
 
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
@@ -49,11 +51,15 @@ Route::get('/SettledComplaints', [SettledComplaintsController::class, 'index'])-
 Route::get('/NumberOfPendingComplaints', [NumberOfPendingComplaintController::class, 'index'])->name('admin.NumberOfPendingComplaints.index');
 Route::get('/HearingSchedule', [HearingScheduleController::class, 'index'])->name('admin.HearingSchedule.index');
 Route::get('/adminDashboard', [AdminDashboardController::class, 'index'])->name('admin.adminDashboard.index');
+Route::get('/Analytics', [AnalyticsController::class, 'index'])->name('admin.Analytics.index');
+Route::get('/UserFeedBack', [UserFeedBackController::class, 'index'])->name('admin.UserFeedBack.index');
 Route::resource('admin/NumberOfComplaints', NumberOfComplaintsController::class);
 Route::resource('admin/SettledComplaints', SettledComplaintsController::class);
 Route::resource('admin/adminDashboard', AdminDashboardController::class);
 Route::resource('admin/NumberOfPendingComplaints',NumberOfPendingComplaintController::class);
 Route::resource('admin/HearingSchedule', HearingScheduleController::class);
+Route::resource('admin/Analytics', AnalyticsController::class);
+Route::resource('admin/UserFeedBack', UserFeedBackController::class);
 
 
 

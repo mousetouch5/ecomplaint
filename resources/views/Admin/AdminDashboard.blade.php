@@ -31,7 +31,7 @@
 
                 <!-- Analytics -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.Analytics.index') }}" class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">bar_chart</span>
                         Analytics
                     </a>
@@ -39,7 +39,7 @@
 
                 <!-- User Feedbacks -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.UserFeedBack.index') }}" class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">feedback</span>
                         User Feedbacks
                     </a>
