@@ -9,6 +9,9 @@ use App\Http\Controllers\SettledComplaintsController;
 use App\Http\Controllers\NumberOfPendingComplaintController;
 use App\Http\Controllers\HearingScheduleController;
 use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\DashboardController;
+
 
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
 Route::post('admin/register', [AdminRegistrationController::class, 'store']);
@@ -25,7 +28,7 @@ Route::middleware(['web'])->group(function () {
 Route::get('/', function () {
     return redirect()->route('login');  // Redirect to the login route
 });
-
+/*
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -35,6 +38,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+*/
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
 Route::get('/number-of-complaints', [NumberOfComplaintsController::class, 'index'])->name('admin.NumberOfComplaints.index');
 Route::get('/SettledComplaints', [SettledComplaintsController::class, 'index'])->name('admin.SettledComplaints.index');
 Route::get('/NumberOfPendingComplaints', [NumberOfPendingComplaintController::class, 'index'])->name('admin.NumberOfPendingComplaints.index');
@@ -49,3 +58,11 @@ Route::resource('admin/HearingSchedule', HearingScheduleController::class);
 
 
 Route::post('/fetch-complaints', [NumberOfComplaintsController::class, 'fetchComplaints'])->name('fetch.complaints');
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+    Route::post('schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+});
+
