@@ -13,6 +13,10 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\UserFeedBackController;
+use App\Http\Controllers\CustomAuthenticatedSessionController;
+
+Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])->middleware('guest');
+
 
 
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');

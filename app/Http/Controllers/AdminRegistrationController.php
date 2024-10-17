@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-
 class AdminRegistrationController extends Controller
 {
     public function create()
@@ -33,11 +32,14 @@ class AdminRegistrationController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'admin', // Automatically assign admin role
         ]);
 
-        // Optional: Assign admin role if you're using roles
-        // $user->assignRole('admin');
+        \Log::info('Created user: ', ['user' => $user]);
 
-        return redirect()->route('/login'); // Redirect to an appropriate route
+        // Optional: Assign admin role if you're using roles
+        // $user->assignRole('admin'); // Uncomment if using a role management package
+
+        return redirect()->route('login')->with('success', 'Admin registered successfully!'); // Redirect to an appropriate route
     }
 }

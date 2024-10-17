@@ -1,15 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Complaint; // Make sure this line is present
+use App\Models\Complaint; 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class AdminDashboardController extends Controller
 {
       // Display the admin dashboard
       public function index(){
 
                 // Fetch all complaints from the database
+        if (Auth::user()->role !== 'admin') {
+            // Redirect to the user's dashboard if not an admin
+            return redirect()->route('dashboard'); // Change 'dashboard' to the actual name of the user's dashboard route
+        }
 
 
         $complaints = Complaint::all(); // Adjust this if you want to filter or paginate the results

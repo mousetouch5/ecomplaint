@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Complaint; 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class HearingScheduleController extends Controller
 {
     public function index()
@@ -13,7 +15,10 @@ class HearingScheduleController extends Controller
         // Fetch all schedules from the database
         $schedules = Schedule::with('user')->get();
 
-
+        if (Auth::user()->role !== 'admin') {
+        // Redirect to the user's dashboard if not an admin
+        return redirect()->route('dashboard'); // Change 'dashboard' to the actual name of the user's dashboard route
+        }
         
         $complaints = Complaint::all(); // Adjust this if you want to filter or paginate the results
         $complaintsThisWeek = Complaint::whereBetween('created_at', [
