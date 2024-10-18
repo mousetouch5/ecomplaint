@@ -5,7 +5,7 @@
             <ul>
                 <!-- Dashboard -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.adminDashboard.index') }}" class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">dashboard</span>
                         Dashboard
                     </a>
@@ -23,7 +23,7 @@
 
                 <!-- Hearing Schedule -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-3 hover:bg-purple-100">
+                    <a href="{{ route('admin.HearingSchedule.index') }}" class="flex items-center p-3 hover:bg-purple-100">
                         <span class="material-icons mr-2">event_note</span>
                         Hearing Schedule
                     </a>
@@ -31,7 +31,7 @@
 
                 <!-- Analytics -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-3 hover:bg-purple-100">
+                    <a href="{{ route('admin.Analytics.index') }}" class="flex items-center p-3 hover:bg-purple-100">
                         <span class="material-icons mr-2">bar_chart</span>
                         Analytics
                     </a>
@@ -47,7 +47,7 @@
 
                 <!-- Profile -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="" class="flex items-center p-3 hover:bg-purple-100">
+                    <a href="profile.show" class="flex items-center p-3 hover:bg-purple-100">
                         <span class="material-icons mr-2">person</span>
                         Profile
                     </a>
@@ -70,6 +70,7 @@
                 </li>
             </ul>
         </div>
+        <!-- Hearing Schedule -->
 
 <div class="flex-grow p-4">
     <!-- Title for Number of Complaints Filed -->

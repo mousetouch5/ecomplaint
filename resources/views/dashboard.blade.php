@@ -154,21 +154,19 @@
 
 <!-- Success Notification -->
 @if(session('success'))
-    <div class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+    <div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
         {{ session('success') }}
         <button onclick="this.parentElement.remove()" class="text-xl ml-4">&times;</button>
     </div>
 @endif
 
+<!-- Error Notification -->
 @if(session('error'))
-    <div class="fixed top-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+    <div id="errorNotification" class="fixed top-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg">
         <strong>Error:</strong> {{ session('error') }}
         <button onclick="this.parentElement.remove()" class="text-xl ml-4">&times;</button>
     </div>
 @endif
-
-
-
 
 
 
@@ -346,6 +344,25 @@
                                     closeFeedbackFormModal();
                                 }
                             </script>
+
+                            <!-- JavaScript to auto-remove after time limit -->
+                    <script>
+                        // Automatically remove success notification after 5 seconds (5000 milliseconds)
+                        setTimeout(function() {
+                            const successNotification = document.getElementById('successNotification');
+                            if (successNotification) {
+                                successNotification.remove();
+                            }
+                        }, 5000); // 5 seconds
+
+                        // Automatically remove error notification after 5 seconds (5000 milliseconds)
+                        setTimeout(function() {
+                            const errorNotification = document.getElementById('errorNotification');
+                            if (errorNotification) {
+                                errorNotification.remove();
+                            }
+                        }, 5000); // 5 seconds
+                    </script>
     </div>
     <style>
                     

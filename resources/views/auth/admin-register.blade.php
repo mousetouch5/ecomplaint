@@ -1,25 +1,44 @@
+<x-guest-layout>
+    <x-authentication-card class="py-8">
+        <x-slot name="logo">
+            <div class="flex items-center">
+                <x-authentication-card-logo />
+                <h1 class="ml-3 text-2xl font-semibold">Admin Registration</h1>
+            </div>
+        </x-slot>
 
-<div class="container">
-    <h2>Admin Registration</h2>
+        <x-validation-errors class="mb-4" />
 
-    <form method="POST" action="{{ route('admin.register') }}">
-        @csrf
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" required>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" required>
-        </div>
-        <div class="mb-3">
-            <label for="password_confirmation" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="password_confirmation" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-</div>
+        <form method="POST" action="{{ route('admin.register') }}">
+            @csrf
+
+            <div class="mt-4">
+                <x-label for="name" value="{{ __('Name') }}" class="text-purple-700" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus placeholder="Enter your name" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="email" value="{{ __('Email') }}" class="text-purple-700" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" required placeholder="Enter your email" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Password') }}" class="text-purple-700" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required placeholder="Enter your password" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" class="text-purple-700" />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required placeholder="Confirm your password" />
+            </div>
+
+            <div class="flex justify-center mt-4">
+                <x-button class="bg-purple-700 text-white flex justify-center w-full">
+                    {{ __('Register') }}
+                </x-button>
+            </div>
+            
+        </form>
+
+    </x-authentication-card>
+</x-guest-layout>

@@ -95,7 +95,7 @@
                         <td class="py-2 px-4 border-b">{{ $schedule->time }}</td>
                         <td class="py-2 px-4 border-b">{{ $schedule->user->name }}</td> <!-- Display User Name -->
                         <td class="py-2 px-4 border-b">
-                            <button class="bg-purple-700 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                            <button for="editScheduleModal" class="bg-purple-700 hover:bg-blue-600 text-white py-1 px-3 rounded-md" onclick="openEditModal({{ $schedule->id }}, '{{ $schedule->date }}', '{{ $schedule->time }}')">
                                 Edit
                             </button>
                         </td>
@@ -109,6 +109,70 @@
         </table>
     </div>
 </div>
+
+
+            <!-- Edit Modal -->
+            <input type="checkbox" id="editScheduleModal" class="modal-toggle" />
+            <div class="modal">
+                <div class="modal-box relative">
+                    <h2 class="text-xl font-bold mb-4">Edit Schedule</h2>
+
+                    <!-- Form to Edit Schedule -->
+                    <form action="" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Date Input -->
+                        <div class="mb-4">
+                            <label for="editDate" class="block mb-2 font-bold">Select Date:</label>
+                            <input type="date" id="editDate" name="date" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                        </div>
+
+                        <!-- Time Input -->
+                        <div class="mb-4">
+                            <label for="editTime" class="block mb-2 font-bold">Select Time:</label>
+                            <input type="time" id="editTime" name="time" class="border border-gray-300 rounded-lg p-2 w-full" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">Save Changes</button>
+                        </div>
+                    </form>
+
+                    <!-- Close Modal Button -->
+                    <button onclick="closeEditModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -188,7 +252,24 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
         
-      
+                        
+
+        <!-- Script to populate and open modal -->
+        <script>
+            function openEditModal(scheduleId, scheduleDate, scheduleTime) {
+                // Open the modal
+                document.getElementById('editScheduleModal').checked = true;
+
+                // Populate the form fields with the existing schedule data
+                document.getElementById('editDate').value = scheduleDate;
+                document.getElementById('editTime').value = scheduleTime;
+            }
+
+            function closeEditModal() {
+                // Close the modal
+                document.getElementById('editScheduleModal').checked = false;
+            }
+        </script>
         
 
 </x-app-layout>
