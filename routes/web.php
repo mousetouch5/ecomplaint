@@ -17,6 +17,8 @@ use App\Http\Controllers\CustomAuthenticatedSessionController;
 
 Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])->middleware('guest');
 
+Route::put('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.updateStatus');
+
 
 
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
@@ -34,17 +36,7 @@ Route::middleware(['web'])->group(function () {
 Route::get('/', function () {
     return redirect()->route('login');  // Redirect to the login route
 });
-/*
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-*/
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

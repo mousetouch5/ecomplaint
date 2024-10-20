@@ -6,15 +6,23 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class ScheduleController extends Controller
 {
     public function index()
     {
-        // Fetch all schedules for availability checking
-        $schedules = Schedule::all();
 
-        // Fetch the schedules booked by the logged-in user
-        $userSchedules = Schedule::where('user_id', Auth::id())->get();
+        $schedules = Schedule::where('date', '>', $currentDate)
+        ->whereNull('deleted_at')
+        ->where('updates', '!=', 'done')
+        ->get();
+
+    // Fetch the schedules booked by the logged-in user, excluding 'done' schedules
+        $userSchedules = Schedule::where('user_id', Auth::id())
+        ->whereNull('deleted_at')
+        ->whereRaw('LOWER(updates) != ?', ['done'])
+        ->get();
 
         return view('dashboard', compact('schedules', 'userSchedules'));
     }

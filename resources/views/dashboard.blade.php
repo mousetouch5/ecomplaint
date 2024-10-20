@@ -115,10 +115,12 @@
                     <h3 class="text-lg font-semibold mb-2">Already Scheduled:</h3>
                     <ul>
                         @foreach($userSchedules as $userSchedule)
+                            @if($userSchedule->updates !== 'done')
                             <li>
                                 Date: {{ \Carbon\Carbon::parse($userSchedule->date)->format('F j, Y') }} | 
                                 Time: {{ \Carbon\Carbon::parse($userSchedule->time)->format('h:i A') }}
                             </li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>

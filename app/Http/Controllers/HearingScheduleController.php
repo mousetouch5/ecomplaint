@@ -12,14 +12,16 @@ class HearingScheduleController extends Controller
 {
     public function index()
     {
-        // Fetch all schedules from the database
-        $schedules = Schedule::with('user')->get();
 
-        if (Auth::user()->role !== 'admin') {
-        // Redirect to the user's dashboard if not an admin
-        return redirect()->route('dashboard'); // Change 'dashboard' to the actual name of the user's dashboard route
-        }
-        
+
+            // Get the current date
+        $currentDate = Carbon::now()->format('Y-m-d');
+
+        $schedules = Schedule::with('user')->where('date', '>', $currentDate)->get();
+        Schedule::where('date', '<=', $currentDate)
+        ->where('updates', 'ongoing') // Only update ongoing schedules
+        ->update(['updates' => 'done']);
+
         $complaints = Complaint::all(); // Adjust this if you want to filter or paginate the results
         $complaintsThisWeek = Complaint::whereBetween('created_at', [
             Carbon::now()->startOfWeek(), 

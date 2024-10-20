@@ -17,6 +17,7 @@ return new class extends Migration
             $table->time('time'); // The schedule time
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key for user
             $table->timestamps();
+            $table->enum('updates', ['ongoing', 'done'])->default('ongoing'); // default is 'user'
         });
     }
 

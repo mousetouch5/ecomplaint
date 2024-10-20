@@ -67,4 +67,26 @@ class ComplaintController extends Controller
             return response()->json(['error' => 'An error occurred while submitting the complaint.'], 500);
         }
     }
+
+public function updateStatus($id) {
+    $complaint = Complaint::find($id);
+
+    if ($complaint) {
+        // Toggle the status between 'not_fixed' and 'fixed'
+        if ($complaint->status === 'not_fixed') {
+            $complaint->status = 'fixed';
+            $complaint->settled_at = now(); // Set the current date and time
+        } else {
+            $complaint->status = 'not_fixed';
+            $complaint->settled_at = null; // Clear the settled_at if status is not fixed
+        }
+
+        $complaint->save();
+        return response()->json(['success' => true, 'status' => $complaint->status]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Complaint not found.'], 404);
+}
+
+
 }

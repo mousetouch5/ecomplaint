@@ -25,5 +25,6 @@ class Complaint extends Model
     // Optionally cast 'uploaded_file' as an array
     protected $casts = [
         'uploaded_file' => 'array',
+        'settled_at' => 'datetime',
     ];
 }
