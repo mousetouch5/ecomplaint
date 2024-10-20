@@ -18,8 +18,9 @@ use App\Http\Controllers\CustomAuthenticatedSessionController;
 Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])->middleware('guest');
 
 Route::put('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.updateStatus');
+Route::put('/schedules/{id}', [HearingScheduleController::class, 'update'])->name('schedules.update'); //for updating hearing schedule
 
-
+Route::put('/schedules/{id}', [HearingScheduleController::class, 'update']);
 
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
 Route::post('admin/register', [AdminRegistrationController::class, 'store']);

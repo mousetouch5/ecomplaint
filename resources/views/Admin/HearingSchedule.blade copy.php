@@ -95,6 +95,14 @@
 
 
 
+
+
+
+
+
+
+
+
         <div class="flex-1 p-6">
             <h1 class="text-3xl font-bold text-purple-600 mb-6">Hearing Schedule</h1>
             <!--
@@ -123,7 +131,6 @@
                 -->
 
 
-
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-300">
                     <thead>
@@ -141,17 +148,20 @@
                                 <td class="py-2 px-4 border-b">{{ $schedule->date }}</td>
                                 <td class="py-2 px-4 border-b">
                                     {{ \Carbon\Carbon::parse($schedule->time)->format('h:i A') }}</td>
+
                                 <td class="py-2 px-4 border-b">{{ $schedule->user->name }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <label
                                         style="border-radius: 10px; padding: 5px; 
-                            background-color: {{ $schedule->status == 'done' ? 'green' : ($schedule->status == 'ongoing' ? 'yellow' : 'transparent') }};
-                            color: {{ $schedule->status == 'done' ? 'white' : ($schedule->status == 'ongoing' ? 'black' : 'inherit') }};">
+                                background-color: {{ $schedule->status == 'done' ? 'green' : ($schedule->status == 'ongoing' ? 'yellow' : 'transparent') }};
+                               color: {{ $schedule->status == 'done' ? 'white' : ($schedule->status == 'ongoing' ? 'black' : 'inherit') }}">
                                         {{ $schedule->updates }}
                                     </label>
                                 </td>
+
                                 <td class="py-2 px-4 border-b">
-                                    <button class="bg-purple-700 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
+                                    <button for="editScheduleModal"
+                                        class="bg-purple-700 hover:bg-blue-600 text-white py-1 px-3 rounded-md"
                                         onclick="openEditModal({{ $schedule->id }}, '{{ $schedule->date }}', '{{ $schedule->time }}')">
                                         Edit
                                     </button>
@@ -165,8 +175,10 @@
                         @endforelse
                     </tbody>
                 </table>
+
             </div>
         </div>
+
 
         <!-- Edit Modal -->
         <input type="checkbox" id="editScheduleModal" class="modal-toggle" />
@@ -178,21 +190,18 @@
                 <form id="editScheduleForm" method="POST">
                     @csrf
                     @method('PUT')
-
-                    <!-- Hidden Input for Schedule ID -->
-                    <input type="hidden" id="scheduleId" name="scheduleId">
-
+                <input type="hidden" id="scheduleId" name="scheduleId">
                     <!-- Date Input -->
                     <div class="mb-4">
                         <label for="editDate" class="block mb-2 font-bold">Select Date:</label>
-                        <input type="date" id="editDate" name="date"
+                        <input type="date" id="editDate" name="date" value="{{ $schedule->date }}"
                             class="border border-gray-300 rounded-lg p-2 w-full" required>
                     </div>
 
                     <!-- Time Input -->
                     <div class="mb-4">
                         <label for="editTime" class="block mb-2 font-bold">Select Time:</label>
-                        <input type="time" id="editTime" name="time"
+                        <input type="time" id="editTime" name="time" value="{{ $schedule->time }}"
                             class="border border-gray-300 rounded-lg p-2 w-full" required>
                     </div>
 
@@ -205,6 +214,56 @@
                     </div>
                 </form>
 
+
+
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#editScheduleForm').on('submit', function(e) {
+                            e.preventDefault(); // Prevent the default form submission
+
+                            var scheduleId = "{{ $schedule->id }}"; // Replace with your actual method to get the ID
+                            var formData = $(this).serialize(); // Serialize form data
+
+                            console.log(formData); // Log the serialized data for debugging
+
+                            $.ajax({
+                                url: '/schedules/' + scheduleId, // The URL for the AJAX request
+                                type: 'PUT',
+                                data: formData,
+                                success: function(response) {
+                                    alert('Schedule updated successfully!');
+                                    location.reload(); // Reload the page or update the UI as needed
+                                },
+                                error: function(xhr) {
+                                    if (xhr.status === 422) { // Unprocessable Entity
+                                        var errors = xhr.responseJSON.errors;
+                                        var errorMessage = '';
+                                        for (var key in errors) {
+                                            if (errors.hasOwnProperty(key)) {
+                                                errorMessage += errors[key].join(', ') +
+                                                    '\n'; // Collect all error messages
+                                            }
+                                        }
+                                        alert('Error updating schedule:\n' + errorMessage);
+                                    } else {
+                                        alert('An error occurred: ' + xhr.responseText);
+                                    }
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+
+
+
+
+
+
+
                 <!-- Close Modal Button -->
                 <button onclick="closeEditModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
                     <i class="material-icons">close</i>
@@ -212,50 +271,6 @@
             </div>
         </div>
 
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#editScheduleForm').on('submit', function(e) {
-                    e.preventDefault(); // Prevent the default form submission
-
-                    // Get the schedule ID from the hidden input
-                    var scheduleId = $('#scheduleId').val();
-                    console.log('Schedule ID for AJAX:', scheduleId); // Log the ID
-
-                    var formData = $(this).serialize(); // Serialize form data
-                    console.log('AJAX URL:', '/schedules/' + scheduleId); // Log the URL
-
-                    $.ajax({
-                        url: '/schedules/' + scheduleId, // The URL for the AJAX request
-                        type: 'PUT',
-                        data: formData,
-                        success: function(response) {
-                            alert('Schedule updated successfully!');
-                            location.reload(); // Reload the page or update the UI as needed
-                        },
-                        error: function(xhr) {
-                            console.log(xhr.responseText); // Log the complete response
-                            var errors = xhr.responseJSON.errors;
-                            var errorMessage = '';
-                            if (errors) {
-                                for (var key in errors) {
-                                    if (errors.hasOwnProperty(key)) {
-                                        errorMessage += errors[key].join(', ') +
-                                            '\n'; // Collect all error messages
-                                    }
-                                }
-                            } else {
-                                errorMessage = xhr.responseJSON.message ||
-                                    'An error occurred'; // Fallback message
-                            }
-                            alert('Error updating schedule:\n' + errorMessage);
-                        }
-                    });
-                });
-            });
-        </script>
 
 
 
@@ -358,23 +373,11 @@
         <script>
             function openEditModal(scheduleId, scheduleDate, scheduleTime) {
                 // Open the modal
-
-                console.log('Opening modal with ID:', scheduleId); // Debugging line
                 document.getElementById('editScheduleModal').checked = true;
 
                 // Populate the form fields with the existing schedule data
                 document.getElementById('editDate').value = scheduleDate;
                 document.getElementById('editTime').value = scheduleTime;
-
-                var scheduleIdInput = document.getElementById('scheduleId'); // Access the hidden input
-                if (scheduleIdInput) { // Check if the element exists
-                    scheduleIdInput.value = scheduleId; // Set the value
-                    console.log('Schedule ID set in hidden input:', scheduleIdInput.value); // Log to check the ID
-                } else {
-                    console.error('Hidden input for schedule ID not found!'); // Log an error if the input is not found
-                }
-
-
             }
 
             function closeEditModal() {

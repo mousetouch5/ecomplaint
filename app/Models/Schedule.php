@@ -13,6 +13,7 @@ class Schedule extends Model
         'date',
         'time',
         'user_id',
+        'updates',
     ];
 
     // Define the relationship to the User model

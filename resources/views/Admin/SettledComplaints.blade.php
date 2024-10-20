@@ -93,53 +93,56 @@
                     </form>
 
                     <!-- Filter by Year Button -->
-                    <form method="GET" action="{{ route('admin.SettledComplaints.index') }}">
-                        <select name="year" onchange="this.form.submit()"
-                            class="bg-purple-600 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
-                            <option value="">Filter by Year</option>
-                            @foreach (range(date('Y'), date('Y') - 10) as $year)
-                                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-                                    {{ $year }}</option>
-                            @endforeach
-                        </select>
-                    </form>
+                    <div>
+                        <form method="GET" action="{{ route('admin.SettledComplaints.index') }}">
+                            <select name="year" onchange="this.form.submit()"
+                                class="bg-purple-600 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
+                                <option value="">Filter by Year</option>
+                                @foreach (range(date('Y'), date('Y') - 10) as $year)
+                                    <option value="{{ $year }}"
+                                        {{ request('year') == $year ? 'selected' : '' }}>
+                                        {{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="space-y-4">
-            <div class="bg-white border border-purple-300 shadow-lg rounded-lg overflow-hidden">
-                <div class="space-y-4">
-                    @forelse($settledComplaints as $complaint)
-                        <div class="bg-white border border-purple-300 shadow-lg rounded-lg overflow-hidden">
-                            <div class="p-4">
-                                <h2 class="text-lg font-semibold text-purple-700">File ID: {{ $complaint->id }}</h2>
-                                <p class="text-gray-700"><strong>Complainant:</strong> {{ $complaint->first_name }}
-                                    {{ $complaint->last_name }}</p>
-                                <p class="text-gray-600"><strong>Settled:</strong>
-                                    {{ $complaint->settled_at->diffForHumans() }}</p>
-                            </div>
-                            <div class="bg-green-100 p-2 rounded-b-lg text-center">
-                                <span class="text-green-600 font-bold"><i
-                                        class="material-icons align-middle">check_circle</i> Settled</span>
-                            </div>
-                        </div>
-                    @empty
-                        <p>No settled complaints found.</p>
-                    @endforelse
-                </div>
 
-                <!-- Uncomment this block to display a message when there are no complaints -->
-                <!--
+            <div class="space-y-4">
+                <div class="bg-white border border-purple-300 shadow-lg rounded-lg overflow-hidden">
+                    <div class="space-y-4">
+                        @forelse($settledComplaints as $complaint)
+                            <div class="bg-white border border-purple-300 shadow-lg rounded-lg overflow-hidden">
+                                <div class="p-4">
+                                    <h2 class="text-lg font-semibold text-purple-700">File ID: {{ $complaint->id }}</h2>
+                                    <p class="text-gray-700"><strong>Complainant:</strong> {{ $complaint->first_name }}
+                                        {{ $complaint->last_name }}</p>
+                                    <p class="text-gray-600"><strong>Settled:</strong>
+                                        {{ $complaint->settled_at->diffForHumans() }}</p>
+                                </div>
+                                <div class="bg-green-100 p-2 rounded-b-lg text-center">
+                                    <span class="text-green-600 font-bold"><i
+                                            class="material-icons align-middle">check_circle</i> Settled</span>
+                                </div>
+                            </div>
+                        @empty
+                            <p>No settled complaints found.</p>
+                        @endforelse
+                    </div>
+
+                    <!-- Uncomment this block to display a message when there are no complaints -->
+                    <!--
                 <div class="bg-white border border-purple-300 shadow-lg rounded-lg p-4 text-center">
                     <p class="text-gray-600">No settled complaints found.</p>
                 </div>
                 -->
+                </div>
             </div>
-        </div>
 
-        <!-- Load Material Icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!-- Load Material Icons -->
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 </x-app-layout>
