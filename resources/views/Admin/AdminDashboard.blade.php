@@ -149,7 +149,13 @@
                             <th class="border px-4 py-2">Description</th>
                             <th class="border px-4 py-2">Files</th>
                             <th class="border px-4 py-2">Status</th>
-                            <th class="border px-4 py-2">Action</th> <!-- New Action Column -->
+
+                            <!--
+
+                            suggested easy update status
+                            <th class="border px-4 py-2">Action</th>
+                        -->
+                            <!-- New Action Column -->
                         </tr>
                     </thead>
 
@@ -174,7 +180,14 @@
                                     @endif
                                 @endforeach
                             </td>
+
+
                             <td class="border px-4 py-2">{{ ucfirst($complaint->status) }}</td>
+
+
+                            <!--
+                                easy update button
+
                             <td class="border px-4 py-2">
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="status-toggle" data-id="{{ $complaint->id }}"
@@ -184,6 +197,8 @@
                                 </label>
 
                             </td>
+
+                        -->
                         </tr>
                     @endforeach
 

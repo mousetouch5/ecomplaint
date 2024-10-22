@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\NumberOfComplaintsController;
@@ -18,10 +18,12 @@ use App\Http\Controllers\CustomAuthenticatedSessionController;
 Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])->middleware('guest');
 
 Route::put('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.updateStatus');
-Route::put('/schedules/{id}', [HearingScheduleController::class, 'update'])->name('schedules.update'); //for updating hearing schedule
+     //for updating hearing schedule
 
-Route::put('/schedules/{id}', [HearingScheduleController::class, 'update']);
 
+
+
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store'); //feedback     
 Route::get('admin/register', [AdminRegistrationController::class, 'create'])->name('admin.register');
 Route::post('admin/register', [AdminRegistrationController::class, 'store']);
 

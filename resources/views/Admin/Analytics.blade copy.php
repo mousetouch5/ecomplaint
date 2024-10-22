@@ -21,8 +21,7 @@
 
                 <!-- Hearing Schedule -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="{{ route('admin.HearingSchedule.index') }}"
-                        class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.HearingSchedule.index') }}" class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">event_note</span>
                         Hearing Schedule
                     </a>
@@ -73,7 +72,7 @@
         <!-- Main content -->
         <div class="flex-1 p-10">
             <h1 class="text-3xl font-bold mb-5">E complaints Analytics </h1>
-
+            
             <!-- Bar Chart Section -->
             <div id="analytics-section">
                 <canvas id="myBarChart" class="w-full h-96"></canvas>
@@ -88,12 +87,10 @@
         const myBarChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                    'October', 'November', 'December'
-                ],
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
                 datasets: [{
                     label: 'Number of Complaints Filed',
-                    data: @json(array_values($monthlyComplaints)),
+                    data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: 'rgba(102, 16, 242, 0.5)', // Purple 700 (semi-transparent)
                     borderColor: 'rgba(102, 16, 242, 1)', // Purple 700 (solid)
                     borderWidth: 1
@@ -110,7 +107,6 @@
             }
         });
     </script>
-
 
     <!-- Load Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

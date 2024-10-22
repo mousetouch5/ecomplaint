@@ -25,6 +25,45 @@ return new class extends Migration
             $table->timestamps();
         });
 
+            //dummy data
+                DB::table('users')->insert([
+            [
+                'name' => 'Admin One',
+                'email' => 'admin1@example.com',
+                'password' => bcrypt('password123'), // Hash the password
+                'role' => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Admin Two',
+                'email' => 'admin2@example.com',
+                'password' => bcrypt('password123'), // Hash the password
+                'role' => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'User One',
+                'email' => 'user1@example.com',
+                'password' => bcrypt('password123'), // Hash the password
+                'role' => 'user',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'User Two',
+                'email' => 'user2@example.com',
+                'password' => bcrypt('password123'), // Hash the password
+                'role' => 'user',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+
+
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

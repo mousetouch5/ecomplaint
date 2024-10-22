@@ -21,7 +21,8 @@
 
                 <!-- Hearing Schedule -->
                 <li class="mb-1 border border-purple-700 rounded-lg shadow hover:shadow-lg transition-all duration-200">
-                    <a href="{{ route('admin.HearingSchedule.index') }}" class="flex items-center p-4 hover:bg-purple-100">
+                    <a href="{{ route('admin.HearingSchedule.index') }}"
+                        class="flex items-center p-4 hover:bg-purple-100">
                         <span class="material-icons mr-2">event_note</span>
                         Hearing Schedule
                     </a>
@@ -69,39 +70,41 @@
             </ul>
         </div>
 
-     <!-- Main content -->
-     <div class="flex-1 p-10">
-        <!-- User Feedbacks Section -->
-        <h1 class="text-3xl font-bold mb-5">User Feedbacks</h1>
-        <div id="user-feedback-section" class="bg-white p-6 rounded-lg shadow-lg">
-            <table class="min-w-full table-auto border-collapse">
-                <thead>
-                    <tr class="bg-purple-700 text-white">
-                        <th class="px-4 py-2 border">User</th>
-                        <th class="px-4 py-2 border">Email</th>
-                        <th class="px-4 py-2 border">Feedback</th>
-                        <th class="px-4 py-2 border">Date Submitted</th>
-                        <th class="px-4 py-2 border">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Sample feedback rows -->
-                    <tr class="hover:bg-gray-100">
-                        <td class="border px-4 py-2">John Doe</td>
-                        <td class="border px-4 py-2">john@example.com</td>
-                        <td class="border px-4 py-2">Great service, but the UI could be improved!</td>
-                        <td class="border px-4 py-2">2024-10-16</td>
-                        <td class="border px-4 py-2 text-center">
-                            <!-- Actions: view, delete, etc. -->
-                            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
-                        </td>
-                    </tr>
-                  
-                </tbody>
-            </table>
+        <!-- Main content -->
+        <div class="flex-1 p-10">
+            <!-- User Feedbacks Section -->
+            <h1 class="text-3xl font-bold mb-5">User Feedbacks</h1>
+            <div id="user-feedback-section" class="bg-white p-6 rounded-lg shadow-lg">
+                <table class="min-w-full table-auto border-collapse">
+                    <thead>
+                        <tr class="bg-purple-700 text-white">
+                            <th class="px-4 py-2 border">User</th>
+                            <th class="px-4 py-2 border">Email</th>
+                            <th class="px-4 py-2 border">Feedback</th>
+                            <th class="px-4 py-2 border">Date Submitted</th>
+                            <th class="px-4 py-2 border">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($feedbacks as $feedback)
+                            <tr class="hover:bg-gray-100">
+                                <td class="border px-4 py-2">{{ optional($feedback->user)->name ?? 'N/A' }}</td>
+                                <td class="border px-4 py-2">
+                                    {{ $feedback->email ?? (optional($feedback->user)->email ?? 'N/A') }}
+                                </td>
+                                <td class="border px-4 py-2">{{ $feedback->complaint }}</td>
+                                <td class="border px-4 py-2">{{ $feedback->created_at->format('Y-m-d') }}</td>
+                                <td class="border px-4 py-2 text-center">
+                                    <button
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Load Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
