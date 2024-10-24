@@ -20,6 +20,8 @@ Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])->m
 Route::put('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.updateStatus');
      //for updating hearing schedule
 
+// In routes/web.php
+Route::get('/schedules/available/{date}', [DashboardController::class, 'getAvailableSchedules']);
 
 
 

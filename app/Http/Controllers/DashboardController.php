@@ -16,9 +16,19 @@ class DashboardController extends Controller
         $userSchedules = Schedule::where('user_id', Auth::id())->get();
 
         return view('dashboard', compact('schedules', 'userSchedules'));
+    }
 
-
+public function getAvailableSchedules($date)
+{
+    // Fetch all schedules for the selected date
+    $schedules = Schedule::where('date', $date)->get();
     
+    // Determine available schedules (those not taken by any user)
+    $availableSchedules = $schedules->filter(function($schedule) {
+        return $schedule->updates !== 'done'; // Modify the condition based on your logic
+    });
+
+    return response()->json($availableSchedules);
 }
  
     //

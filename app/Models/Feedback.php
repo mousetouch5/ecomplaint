@@ -15,7 +15,7 @@ class Feedback extends Model
     'name', 
     'email', 
     'complaint',
-    'user_id',];
+    'user_id',  ];
 
 
     public function user()

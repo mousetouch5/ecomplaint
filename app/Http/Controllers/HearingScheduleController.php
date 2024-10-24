@@ -20,9 +20,9 @@ class HearingScheduleController extends Controller
 
         // Loop through each schedule and check if the date matches the current date
         foreach ($schedules as $schedule) {
-            if ($schedule->date == $currentDate && $schedule->status != 'done') {
+            if ($schedule->date == $currentDate && $schedule->updates != 'done') {
                 // Update the schedule status to 'done'
-                $schedule->status = 'done';
+                $schedule->updates = 'done';
                 $schedule->save(); // Save the updated status to the database
             }
         }
